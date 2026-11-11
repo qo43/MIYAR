@@ -73,6 +73,12 @@ benchmark/external (Absher)┘   suites · stratified sample       │          
 Bank cases go to every target. HTTP bots get the raw message, and raw LLMs play the bank assistant with the same
 system prompt and canaries. Model-level suites go only to LLM targets, with no bank persona.
 
+## Windows (WSL) — one click
+
+Double-click **`start-dashboard.bat`**. The first run checks WSL for Python, Node 20+ and the PDF libraries, offers
+to install anything missing, sets up an environment in `~/.cybernext` inside WSL, and opens the dashboard at
+http://localhost:8501. Later runs start in a few seconds.
+
 ## Quick start (no API keys needed)
 
 ```bash

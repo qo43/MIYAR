@@ -59,6 +59,8 @@ def ensure_bot(log) -> subprocess.Popen | None:
 
 
 def promptfoo_cmd() -> list[str]:
+    if os.getenv("PROMPTFOO_BIN"):  # e.g. installed outside a Windows-mounted checkout (see scripts/wsl_start.sh)
+        return [os.environ["PROMPTFOO_BIN"]]
     local = ROOT / "node_modules" / ".bin" / ("promptfoo.cmd" if os.name == "nt" else "promptfoo")
     if local.exists():
         return [str(local)]
