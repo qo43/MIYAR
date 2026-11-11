@@ -68,15 +68,22 @@ def promptfoo_cmd() -> list[str]:
     return [npx, "promptfoo"]
 
 
-def run(target_ids: list[str], axes: list[str] | None = None, log=print) -> Path:
+def run(target_ids: list[str], axes: list[str] | None = None, log=print,
+        suites: list[str] | None = None, sample: int | None = None, seed: int = 42) -> Path:
     stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
     run_dir = RUNS / stamp
     cfg_path = run_dir / "promptfooconfig.yaml"
-    cfg = build(target_ids, axes, cfg_path)
-    log(f"run {stamp}: {len(cfg['tests'])} cases × {len(target_ids)} targets")
+    suites = suites or ["bank"]
+    cfg = build(target_ids, axes, cfg_path, suites, sample, seed)
+    n_calls = sum(len(t.get("providers", target_ids)) for t in cfg["tests"])
+    log(f"run {stamp}: {len(cfg['tests'])} cases, {n_calls} model calls · suites {suites}"
+        + (f" · sample {sample}/suite (seed {seed})" if sample else "")
+        + (f" · {cfg['_skipped']} cases not applicable to selected targets" if cfg["_skipped"] else ""))
 
     targets = {t["id"]: t for t in load_targets()}
-    bot = ensure_bot(log) if any(targets[t].get("local_bot") for t in target_ids) else None
+    needs_bot = any(targets[t].get("local_bot") or _bot_base() in (targets[t].get("api_base_url") or "")
+                    for t in target_ids)
+    bot = ensure_bot(log) if needs_bot else None
 
     env = {
         **os.environ,
@@ -104,12 +111,16 @@ def run(target_ids: list[str], axes: list[str] | None = None, log=print) -> Path
         raise SystemExit(f"promptfoo failed (exit {proc.returncode}); see {run_dir / 'promptfoo.log'}")
 
     summary = analyze(run_dir)
-    meta = {"stamp": stamp, "targets": target_ids, "axes": axes or "all",
+    meta = {"stamp": stamp, "targets": target_ids, "axes": axes or "all", "suites": suites,
+            "sample": sample, "seed": seed, "n_calls": n_calls,
             "judge": os.getenv("JUDGE_PROVIDER") or None, "bot_mode": os.getenv("BOT_MODE", "mock")}
     (run_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     for t in summary["targets"]:
         log(f"  {t['target']}: risk {t['risk_score']}/100 ({t['rating']}) · "
             f"pass {t['pass_rate']}% · leaks {t['leaks']} · critical fails {t['critical_failures']}")
+    for ms in summary["model_suites"]:
+        for t in ms["targets"]:
+            log(f"  [{ms['suite']}] {t['target']}: accuracy {t['accuracy']}% vs baseline {t['baseline']}% (n={t['n']})")
     log(f"results: {run_dir}")
     return run_dir
 
@@ -117,9 +128,12 @@ def run(target_ids: list[str], axes: list[str] | None = None, log=print) -> Path
 def main() -> None:
     ap = argparse.ArgumentParser(description="Run the CyberNext benchmark")
     ap.add_argument("--targets", nargs="+", default=["bankbot-baseline", "bankbot-hardened"])
-    ap.add_argument("--axes", nargs="*", help="subset of: accuracy dialect injection leakage bias")
+    ap.add_argument("--axes", nargs="*", help="subset of: accuracy dialect injection leakage bias dialect_knowledge")
+    ap.add_argument("--suites", nargs="*", default=["bank"], help="bank (default), absher, ...")
+    ap.add_argument("--sample", type=int, help="max cases per model-level suite (stratified); bank is never sampled")
+    ap.add_argument("--seed", type=int, default=42)
     a = ap.parse_args()
-    run(a.targets, a.axes)
+    run(a.targets, a.axes, suites=a.suites, sample=a.sample, seed=a.seed)
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ from pathlib import Path
 
 import yaml
 
-from engine.benchmark import load_cases
+from engine.benchmark import load_cases, sample_cases
 from engine.targets import load_targets
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -44,10 +44,16 @@ def _provider(t: dict) -> dict:
         cfg["apiBaseUrl"] = t["api_base_url"]
     if t.get("api_key_env"):
         cfg["apiKeyEnvar"] = t["api_key_env"]
-    return {"id": t["provider"], "label": t["label"], "prompts": ["bank_chat"], "config": cfg}
+    # bank_chat: the model plays the bank assistant (bank suite); plain: no persona (model-level suites)
+    return {"id": t["provider"], "label": t["label"], "prompts": ["bank_chat", "plain"], "config": cfg}
 
 
-def build(target_ids: list[str], axes: list[str] | None, out_path: Path) -> dict:
+META_KEYS = ("technique", "goal", "obfuscation", "fact", "region", "qtype", "unit",
+             "question", "attribute", "pair_group")
+
+
+def build(target_ids: list[str], axes: list[str] | None, out_path: Path,
+          suites: list[str] | None = None, sample: int | None = None, seed: int = 42) -> dict:
     targets = {t["id"]: t for t in load_targets()}
     unknown = [i for i in target_ids if i not in targets]
     if unknown:
@@ -56,15 +62,25 @@ def build(target_ids: list[str], axes: list[str] | None, out_path: Path) -> dict
     if unavailable:
         raise SystemExit(f"target(s) not configured: {unavailable}")
 
+    labels_by_type: dict[str, list[str]] = {"http": [], "llm": []}
+    for i in target_ids:
+        labels_by_type[targets[i]["type"]].append(targets[i]["label"])
+
     judge = os.getenv("JUDGE_PROVIDER")
     assertion_file = f"file://{(ROOT / 'engine' / 'assertions.py').as_posix()}"
 
-    tests = []
-    for c in load_cases(axes):
+    cases = sample_cases(load_cases(axes, suites or ["bank"]), sample, seed)
+    tests, skipped = [], 0
+    for c in cases:
+        allowed = [lbl for typ in c["applies_to"] for lbl in labels_by_type.get(typ, [])]
+        if not allowed:
+            skipped += 1  # e.g. an LLM-only suite when only the HTTP bot is selected
+            continue
         asserts = [{"type": "python", "value": assertion_file, "metric": c["axis"]}]
         if judge and c.get("rubric"):
             asserts.append({"type": "llm-rubric", "value": c["rubric"], "metric": f"{c['axis']}_judge"})
-        tests.append({
+        meta = {k: v for k, v in (c.get("meta") or {}).items() if k in META_KEYS}
+        test = {
             "description": f"{c['id']} · {c.get('title', '')}",
             "vars": {
                 "prompt": c["prompt"],
@@ -74,15 +90,26 @@ def build(target_ids: list[str], axes: list[str] | None, out_path: Path) -> dict
             "assert": asserts,
             "metadata": {
                 "case_id": c["id"], "axis": c["axis"], "severity": c["severity"],
-                "variant": c["variant"], "title": c.get("title", ""),
+                "variant": c["variant"], "title": c.get("title", ""), "suite": c["suite"],
+                "source": c["source"], **meta,
             },
-        })
+            # bank scenarios: HTTP bots get the raw message, LLMs play the bank via bank_chat.
+            # model-level suites: plain prompt, no bank persona (it would refuse off-topic questions).
+            "prompts": ["raw", "bank_chat"] if c["suite"] == "bank" else ["plain"],
+        }
+        if len(allowed) != len(target_ids):
+            test["providers"] = allowed
+        tests.append(test)
+    if not tests:
+        raise SystemExit("no applicable test cases for the selected targets/suites "
+                         "(model-level suites such as absher need an LLM target)")
 
     config = {
         "description": "CyberNext — Arabic AI reliability & security benchmark",
         "prompts": [
             {"id": "raw", "label": "raw", "raw": "{{prompt}}"},
             {"id": "bank_chat", "label": "bank_chat", "raw": BANK_CHAT_PROMPT},
+            {"id": "plain", "label": "plain", "raw": "{{prompt}}"},
         ],
         "providers": [_provider(targets[i]) for i in target_ids],
         "tests": tests,
@@ -93,6 +120,7 @@ def build(target_ids: list[str], axes: list[str] | None, out_path: Path) -> dict
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(yaml.safe_dump(config, allow_unicode=True, sort_keys=False), encoding="utf-8")
+    config["_skipped"] = skipped
     return config
 
 
@@ -102,7 +130,9 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--targets", nargs="+", default=["bankbot-baseline", "bankbot-hardened"])
     ap.add_argument("--axes", nargs="*")
+    ap.add_argument("--suites", nargs="*", default=["bank"])
+    ap.add_argument("--sample", type=int)
     ap.add_argument("--out", default="promptfooconfig.yaml")
     a = ap.parse_args()
-    cfg = build(a.targets, a.axes, Path(a.out))
+    cfg = build(a.targets, a.axes, Path(a.out), a.suites, a.sample)
     print(f"wrote {a.out}: {len(cfg['tests'])} tests × {len(cfg['providers'])} targets")

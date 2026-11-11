@@ -24,13 +24,13 @@ targets:
     local_bot: true
 
   - id: openai
-    label: "OpenAI ${OPENAI_MODEL:-gpt-4o-mini} + bank prompt"
+    label: "OpenAI ${OPENAI_MODEL:-gpt-4o-mini}"
     type: llm
     provider: "openai:chat:${OPENAI_MODEL:-gpt-4o-mini}"
     requires_env: [OPENAI_API_KEY]
 
   - id: anthropic
-    label: "Anthropic ${ANTHROPIC_MODEL:-claude-haiku-4-5} + bank prompt"
+    label: "Anthropic ${ANTHROPIC_MODEL:-claude-haiku-4-5}"
     type: llm
     provider: "anthropic:messages:${ANTHROPIC_MODEL:-claude-haiku-4-5}"
     requires_env: [ANTHROPIC_API_KEY]
@@ -38,7 +38,7 @@ targets:
   # Any OpenAI-compatible endpoint: OpenRouter, Groq, or a local Ollama / vLLM
   # serving an Arabic model (ALLaM, Jais, ...).
   - id: compat
-    label: "${COMPAT_LABEL:-OpenAI-compatible model} + bank prompt"
+    label: "${COMPAT_LABEL:-OpenAI-compatible model}"
     type: llm
     provider: "openai:chat:${COMPAT_MODEL:-allam}"
     api_base_url: "${COMPAT_BASE_URL}"

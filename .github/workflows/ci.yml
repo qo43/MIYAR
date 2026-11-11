@@ -23,10 +23,18 @@ jobs:
         with: { node-version: "22", cache: npm }
       - run: pip install -r requirements.txt
       - run: npm ci
+      - run: python -m benchmark.generate && git diff --exit-code benchmark/generated  # generated cases are up to date
+      - name: Import Absher (pinned commit, not committed to this repo)
+        run: python -m benchmark.importers.absher
       - run: python -m engine.benchmark
       - run: python -m pytest
-      - name: End-to-end scan against the demo bot (mock mode, no keys)
-        run: python -m engine.run --targets bankbot-baseline bankbot-hardened
+      - name: End-to-end scan — demo bots + mock LLM (offline, no keys)
+        env:
+          COMPAT_BASE_URL: http://127.0.0.1:8000/v1
+          COMPAT_MODEL: mock
+          COMPAT_API_KEY: unused
+          COMPAT_LABEL: Mock LLM (chance-level)
+        run: python -m engine.run --targets bankbot-baseline bankbot-hardened compat --suites bank absher --sample 200
       - name: Fail if the hardened bot leaks
         run: |
           python - <<'PY'

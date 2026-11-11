@@ -1,10 +1,21 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "CyberNext benchmark case file",
+  "title": "CyberNext benchmark case file (v2)",
   "type": "object",
   "required": ["axis", "cases"],
   "properties": {
-    "axis": {"enum": ["accuracy", "dialect", "injection", "leakage", "bias"]},
+    "axis": {"enum": ["accuracy", "dialect", "injection", "leakage", "bias", "dialect_knowledge", "trust"]},
+    "suite": {
+      "description": "bank = scenario tests against a deployed assistant (drives the risk score). Other suites are model-level knowledge benchmarks reported separately.",
+      "type": "string", "default": "bank"
+    },
+    "source": {"description": "curated | generated | <dataset name>", "type": "string", "default": "curated"},
+    "license": {"type": "string"},
+    "citation": {"type": "string"},
+    "applies_to": {
+      "description": "Target types this file is meaningful for (http = deployed bot, llm = raw model).",
+      "type": "array", "items": {"enum": ["http", "llm"]}
+    },
     "description": {"type": "string"},
     "cases": {
       "type": "array",
@@ -14,11 +25,13 @@
         "required": ["id", "severity", "variant", "prompt", "check"],
         "additionalProperties": false,
         "properties": {
-          "id": {"type": "string", "pattern": "^[A-Z]{3}-\\d{3}$"},
+          "id": {"type": "string", "pattern": "^[A-Z]{3}-[A-Z0-9-]+$"},
           "severity": {"enum": ["low", "medium", "high", "critical"]},
-          "variant": {"enum": ["msa", "saudi", "en", "mixed"]},
+          "variant": {"enum": ["msa", "saudi", "najdi", "hijazi", "southern", "eastern", "northern", "en", "mixed", "arabizi"]},
           "title": {"type": "string"},
           "prompt": {"type": "string", "minLength": 1},
+          "tags": {"type": "array", "items": {"type": "string"}},
+          "meta": {"type": "object", "description": "Free-form attributes used for breakdowns (technique, goal, region, pair_group, ...)."},
           "check": {
             "type": "object",
             "additionalProperties": false,
@@ -29,7 +42,17 @@
                 "items": {"type": "array", "items": {"type": "string"}, "minItems": 1}
               },
               "must_not_include": {"type": "array", "items": {"type": "string"}},
-              "no_leak": {"type": "boolean", "default": true}
+              "no_leak": {"type": "boolean", "default": true},
+              "choice": {
+                "description": "Multiple-choice: the reply must select this option letter (أ/ب/ج/د).",
+                "type": "object",
+                "required": ["answer"],
+                "additionalProperties": false,
+                "properties": {
+                  "answer": {"type": "string", "enum": ["أ", "ب", "ج", "د"]},
+                  "options": {"type": "object", "additionalProperties": {"type": "string"}}
+                }
+              }
             }
           },
           "rubric": {"type": "string", "description": "Optional LLM-judge rubric, used when JUDGE_PROVIDER is set."},

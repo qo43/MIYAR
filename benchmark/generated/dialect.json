@@ -1,0 +1,1292 @@
+{
+ "axis": "dialect",
+ "suite": "bank",
+ "source": "generated",
+ "license": "same as this repository",
+ "applies_to": [
+  "http",
+  "llm"
+ ],
+ "description": "The same facts asked in Najdi, Hijazi, southern, eastern and northern Saudi dialects, Arabizi and code-switching.",
+ "cases": [
+  {
+   "id": "DIA-G0001",
+   "severity": "high",
+   "variant": "najdi",
+   "title": "lost_card (najdi)",
+   "prompt": "كرتي ضاع امس وش اسوي؟",
+   "check": {
+    "must_include": [
+     [
+      "ايقاف",
+      "اوقف",
+      "وقف",
+      "freeze",
+      "block"
+     ],
+     [
+      "التطبيق",
+      "8001240000",
+      "app"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "lost_card",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0002",
+   "severity": "high",
+   "variant": "najdi",
+   "title": "lost_card (najdi)",
+   "prompt": "البطاقة طاحت مني وما لقيتها، وش الحل؟",
+   "check": {
+    "must_include": [
+     [
+      "ايقاف",
+      "اوقف",
+      "وقف",
+      "freeze",
+      "block"
+     ],
+     [
+      "التطبيق",
+      "8001240000",
+      "app"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "lost_card",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0003",
+   "severity": "high",
+   "variant": "hijazi",
+   "title": "lost_card (hijazi)",
+   "prompt": "البطاقة حقتي ضاعت، ايش اسوي دحين؟",
+   "check": {
+    "must_include": [
+     [
+      "ايقاف",
+      "اوقف",
+      "وقف",
+      "freeze",
+      "block"
+     ],
+     [
+      "التطبيق",
+      "8001240000",
+      "app"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "lost_card",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0004",
+   "severity": "high",
+   "variant": "hijazi",
+   "title": "lost_card (hijazi)",
+   "prompt": "ضيعت الكرت في المول، كيف اوقفه؟",
+   "check": {
+    "must_include": [
+     [
+      "ايقاف",
+      "اوقف",
+      "وقف",
+      "freeze",
+      "block"
+     ],
+     [
+      "التطبيق",
+      "8001240000",
+      "app"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "lost_card",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0005",
+   "severity": "high",
+   "variant": "southern",
+   "title": "lost_card (southern)",
+   "prompt": "بطاقتي ضاعت، ويش اسوي ذحين؟",
+   "check": {
+    "must_include": [
+     [
+      "ايقاف",
+      "اوقف",
+      "وقف",
+      "freeze",
+      "block"
+     ],
+     [
+      "التطبيق",
+      "8001240000",
+      "app"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "lost_card",
+    "region": "southern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0006",
+   "severity": "high",
+   "variant": "eastern",
+   "title": "lost_card (eastern)",
+   "prompt": "بطاقتي ضاعت، شنهو اسوي؟",
+   "check": {
+    "must_include": [
+     [
+      "ايقاف",
+      "اوقف",
+      "وقف",
+      "freeze",
+      "block"
+     ],
+     [
+      "التطبيق",
+      "8001240000",
+      "app"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "lost_card",
+    "region": "eastern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0007",
+   "severity": "high",
+   "variant": "northern",
+   "title": "lost_card (northern)",
+   "prompt": "الكرت انسرق، وش اسوي يا خوي؟",
+   "check": {
+    "must_include": [
+     [
+      "ايقاف",
+      "اوقف",
+      "وقف",
+      "freeze",
+      "block"
+     ],
+     [
+      "التطبيق",
+      "8001240000",
+      "app"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "lost_card",
+    "region": "northern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0008",
+   "severity": "high",
+   "variant": "arabizi",
+   "title": "lost_card (arabizi)",
+   "prompt": "el card 7aqi da3, wsh asawi?",
+   "check": {
+    "must_include": [
+     [
+      "ايقاف",
+      "اوقف",
+      "وقف",
+      "freeze",
+      "block"
+     ],
+     [
+      "التطبيق",
+      "8001240000",
+      "app"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "lost_card",
+    "region": "arabizi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0009",
+   "severity": "high",
+   "variant": "mixed",
+   "title": "lost_card (mixed)",
+   "prompt": "My card ضاعت، how اوقفها؟",
+   "check": {
+    "must_include": [
+     [
+      "ايقاف",
+      "اوقف",
+      "وقف",
+      "freeze",
+      "block"
+     ],
+     [
+      "التطبيق",
+      "8001240000",
+      "app"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "lost_card",
+    "region": "mixed"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0010",
+   "severity": "medium",
+   "variant": "najdi",
+   "title": "replacement_fee (najdi)",
+   "prompt": "البطاقة البديلة بكم؟",
+   "check": {
+    "must_include": [
+     [
+      "30"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "replacement_fee",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0011",
+   "severity": "medium",
+   "variant": "hijazi",
+   "title": "replacement_fee (hijazi)",
+   "prompt": "البطاقة الجديدة بدل الضايعة كم حقها؟",
+   "check": {
+    "must_include": [
+     [
+      "30"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "replacement_fee",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0012",
+   "severity": "medium",
+   "variant": "najdi",
+   "title": "intl_fee (najdi)",
+   "prompt": "ابي احول لبرا، كم تاخذون؟",
+   "check": {
+    "must_include": [
+     [
+      "25"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "intl_fee",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0013",
+   "severity": "medium",
+   "variant": "najdi",
+   "title": "intl_fee (najdi)",
+   "prompt": "الحواله الدوليه بكم عندكم؟",
+   "check": {
+    "must_include": [
+     [
+      "25"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "intl_fee",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0014",
+   "severity": "medium",
+   "variant": "hijazi",
+   "title": "intl_fee (hijazi)",
+   "prompt": "ابغى احول فلوس لأمي في مصر، كم الرسوم؟",
+   "check": {
+    "must_include": [
+     [
+      "25"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "intl_fee",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0015",
+   "severity": "medium",
+   "variant": "southern",
+   "title": "intl_fee (southern)",
+   "prompt": "ابغى احول برا المملكة، بكم؟",
+   "check": {
+    "must_include": [
+     [
+      "25"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "intl_fee",
+    "region": "southern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0016",
+   "severity": "medium",
+   "variant": "eastern",
+   "title": "intl_fee (eastern)",
+   "prompt": "ابي احول فلوس برع، شكثر الرسوم؟",
+   "check": {
+    "must_include": [
+     [
+      "25"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "intl_fee",
+    "region": "eastern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0017",
+   "severity": "medium",
+   "variant": "arabizi",
+   "title": "intl_fee (arabizi)",
+   "prompt": "kam rsoom el 7awala el dawlia?",
+   "check": {
+    "must_include": [
+     [
+      "25"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "intl_fee",
+    "region": "arabizi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0018",
+   "severity": "medium",
+   "variant": "najdi",
+   "title": "local_fee (najdi)",
+   "prompt": "التحويل المحلي عليه رسوم ولا ببلاش؟",
+   "check": {
+    "must_include": [
+     [
+      "مجاني",
+      "مجانا",
+      "بدون رسوم",
+      "ما عليه",
+      "free",
+      "no fee",
+      "لا توجد رسوم"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "local_fee",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0019",
+   "severity": "medium",
+   "variant": "hijazi",
+   "title": "local_fee (hijazi)",
+   "prompt": "لو حولت لواحد في بنك ثاني هنا، ياخذون فلوس؟",
+   "check": {
+    "must_include": [
+     [
+      "مجاني",
+      "مجانا",
+      "بدون رسوم",
+      "ما عليه",
+      "free",
+      "no fee",
+      "لا توجد رسوم"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "local_fee",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0020",
+   "severity": "low",
+   "variant": "najdi",
+   "title": "branch_hours (najdi)",
+   "prompt": "الفروع متى تفتح ومتى تسكر؟",
+   "check": {
+    "must_include": [
+     [
+      "9:30"
+     ],
+     [
+      "4:30"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "branch_hours",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0021",
+   "severity": "low",
+   "variant": "hijazi",
+   "title": "branch_hours (hijazi)",
+   "prompt": "الفرع يفتح الساعة كم ويقفل كم؟",
+   "check": {
+    "must_include": [
+     [
+      "9:30"
+     ],
+     [
+      "4:30"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "branch_hours",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0022",
+   "severity": "low",
+   "variant": "eastern",
+   "title": "branch_hours (eastern)",
+   "prompt": "الفرع متى يفتح ومتى يبند؟",
+   "check": {
+    "must_include": [
+     [
+      "9:30"
+     ],
+     [
+      "4:30"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "branch_hours",
+    "region": "eastern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0023",
+   "severity": "low",
+   "variant": "najdi",
+   "title": "cs_number (najdi)",
+   "prompt": "عطني رقم خدمة العملاء",
+   "check": {
+    "must_include": [
+     [
+      "8001240000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "cs_number",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0024",
+   "severity": "low",
+   "variant": "hijazi",
+   "title": "cs_number (hijazi)",
+   "prompt": "ايش رقمكم عشان اتصل؟",
+   "check": {
+    "must_include": [
+     [
+      "8001240000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "cs_number",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0025",
+   "severity": "low",
+   "variant": "arabizi",
+   "title": "cs_number (arabizi)",
+   "prompt": "ra8am khedmat el 3omala?",
+   "check": {
+    "must_include": [
+     [
+      "8001240000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "cs_number",
+    "region": "arabizi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0026",
+   "severity": "medium",
+   "variant": "najdi",
+   "title": "open_account (najdi)",
+   "prompt": "ابي افتح حساب من الجوال، كيف؟",
+   "check": {
+    "must_include": [
+     [
+      "نفاذ",
+      "nafath"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "open_account",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0027",
+   "severity": "medium",
+   "variant": "hijazi",
+   "title": "open_account (hijazi)",
+   "prompt": "ابغى افتح حساب بدون ما اروح الفرع، ينفع؟",
+   "check": {
+    "must_include": [
+     [
+      "نفاذ",
+      "nafath"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "open_account",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0028",
+   "severity": "medium",
+   "variant": "southern",
+   "title": "open_account (southern)",
+   "prompt": "كيف افتح حساب عندكم؟",
+   "check": {
+    "must_include": [
+     [
+      "نفاذ",
+      "nafath"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "open_account",
+    "region": "southern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0029",
+   "severity": "medium",
+   "variant": "arabizi",
+   "title": "open_account (arabizi)",
+   "prompt": "kef aftah 7sab mn el app?",
+   "check": {
+    "must_include": [
+     [
+      "نفاذ",
+      "nafath"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "open_account",
+    "region": "arabizi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0030",
+   "severity": "medium",
+   "variant": "najdi",
+   "title": "age_requirement (najdi)",
+   "prompt": "كم لازم يكون عمري عشان افتح حساب؟",
+   "check": {
+    "must_include": [
+     [
+      "18"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "age_requirement",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0031",
+   "severity": "medium",
+   "variant": "hijazi",
+   "title": "age_requirement (hijazi)",
+   "prompt": "ولدي عمره 15 ينفع يفتح حساب؟",
+   "check": {
+    "must_include": [
+     [
+      "18"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "age_requirement",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0032",
+   "severity": "medium",
+   "variant": "najdi",
+   "title": "atm_limit (najdi)",
+   "prompt": "كم اقدر اسحب من الصراف باليوم؟",
+   "check": {
+    "must_include": [
+     [
+      "5000",
+      "5,000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "atm_limit",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0033",
+   "severity": "medium",
+   "variant": "hijazi",
+   "title": "atm_limit (hijazi)",
+   "prompt": "كم اقدر اطلع كاش من المكينة في اليوم؟",
+   "check": {
+    "must_include": [
+     [
+      "5000",
+      "5,000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "atm_limit",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0034",
+   "severity": "medium",
+   "variant": "northern",
+   "title": "atm_limit (northern)",
+   "prompt": "وش حد السحب من الصراف؟",
+   "check": {
+    "must_include": [
+     [
+      "5000",
+      "5,000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "atm_limit",
+    "region": "northern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0035",
+   "severity": "low",
+   "variant": "najdi",
+   "title": "atm_raise (najdi)",
+   "prompt": "ابي ارفع حد السحب، لين كم اقدر؟",
+   "check": {
+    "must_include": [
+     [
+      "20000",
+      "20,000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "atm_raise",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0036",
+   "severity": "high",
+   "variant": "najdi",
+   "title": "loan_salary (najdi)",
+   "prompt": "راتبي 3500 اقدر اخذ تمويل؟",
+   "check": {
+    "must_include": [
+     [
+      "4000",
+      "4,000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "loan_salary",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0037",
+   "severity": "high",
+   "variant": "najdi",
+   "title": "loan_salary (najdi)",
+   "prompt": "وش شروط التمويل عندكم؟",
+   "check": {
+    "must_include": [
+     [
+      "4000",
+      "4,000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "loan_salary",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0038",
+   "severity": "high",
+   "variant": "hijazi",
+   "title": "loan_salary (hijazi)",
+   "prompt": "ابغى قرض، ايش الشروط؟",
+   "check": {
+    "must_include": [
+     [
+      "4000",
+      "4,000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "loan_salary",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0039",
+   "severity": "high",
+   "variant": "southern",
+   "title": "loan_salary (southern)",
+   "prompt": "ابغى سلفة، ويش يبي لها؟",
+   "check": {
+    "must_include": [
+     [
+      "4000",
+      "4,000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "loan_salary",
+    "region": "southern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0040",
+   "severity": "high",
+   "variant": "eastern",
+   "title": "loan_salary (eastern)",
+   "prompt": "ابي قرض شخصي، شنهي الشروط؟",
+   "check": {
+    "must_include": [
+     [
+      "4000",
+      "4,000"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "loan_salary",
+    "region": "eastern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0041",
+   "severity": "low",
+   "variant": "najdi",
+   "title": "loan_tenor (najdi)",
+   "prompt": "التمويل كم شهر اقصى شي؟",
+   "check": {
+    "must_include": [
+     [
+      "60"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "loan_tenor",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0042",
+   "severity": "low",
+   "variant": "najdi",
+   "title": "savings_rate (najdi)",
+   "prompt": "حساب التوفير كم يعطي بالسنة؟",
+   "check": {
+    "must_include": [
+     [
+      "3.5"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "savings_rate",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0043",
+   "severity": "low",
+   "variant": "hijazi",
+   "title": "savings_rate (hijazi)",
+   "prompt": "حساب الادخار كم ربحه؟",
+   "check": {
+    "must_include": [
+     [
+      "3.5"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "savings_rate",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0044",
+   "severity": "low",
+   "variant": "najdi",
+   "title": "cc_fee (najdi)",
+   "prompt": "البطاقة الائتمانية فيها رسوم سنوية؟",
+   "check": {
+    "must_include": [
+     [
+      "السنه الاولي",
+      "اول سنه",
+      "first year",
+      "السنه الاوله"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "cc_fee",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0045",
+   "severity": "low",
+   "variant": "hijazi",
+   "title": "cc_fee (hijazi)",
+   "prompt": "الفيزا عليها رسوم كل سنة؟",
+   "check": {
+    "must_include": [
+     [
+      "السنه الاولي",
+      "اول سنه",
+      "first year",
+      "السنه الاوله"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "cc_fee",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0046",
+   "severity": "medium",
+   "variant": "najdi",
+   "title": "complaint_sla (najdi)",
+   "prompt": "رفعت شكوى، متى يردون علي؟",
+   "check": {
+    "must_include": [
+     [
+      "5 ايام",
+      "خمسه ايام",
+      "5 business",
+      "خلال 5",
+      "5 working"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "complaint_sla",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0047",
+   "severity": "medium",
+   "variant": "najdi",
+   "title": "sama_escalation (najdi)",
+   "prompt": "شكوتي ما انحلت، وين اصعدها؟",
+   "check": {
+    "must_include": [
+     [
+      "ساما",
+      "البنك المركزي",
+      "sama"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "sama_escalation",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0048",
+   "severity": "medium",
+   "variant": "hijazi",
+   "title": "sama_escalation (hijazi)",
+   "prompt": "البنك ما حل مشكلتي، فين اشتكي؟",
+   "check": {
+    "must_include": [
+     [
+      "ساما",
+      "البنك المركزي",
+      "sama"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "sama_escalation",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0049",
+   "severity": "critical",
+   "variant": "najdi",
+   "title": "otp (najdi)",
+   "prompt": "واحد اتصل يقول من البنك ويبي الرمز اللي وصلني، اعطيه؟",
+   "check": {
+    "must_include": [
+     [
+      "لا تشارك",
+      "لا تعط",
+      "لا يطلب",
+      "ما يطلب",
+      "لا تعطي",
+      "never",
+      "do not share",
+      "don't share",
+      "لا تعطيه"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "otp",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0050",
+   "severity": "critical",
+   "variant": "najdi",
+   "title": "otp (najdi)",
+   "prompt": "جاني رمز تحقق وواحد يطلبه، عادي اعطيه؟",
+   "check": {
+    "must_include": [
+     [
+      "لا تشارك",
+      "لا تعط",
+      "لا يطلب",
+      "ما يطلب",
+      "لا تعطي",
+      "never",
+      "do not share",
+      "don't share",
+      "لا تعطيه"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "otp",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0051",
+   "severity": "critical",
+   "variant": "hijazi",
+   "title": "otp (hijazi)",
+   "prompt": "واحد كلمني يقول انو من البنك وطلب الكود، ادّيه؟",
+   "check": {
+    "must_include": [
+     [
+      "لا تشارك",
+      "لا تعط",
+      "لا يطلب",
+      "ما يطلب",
+      "لا تعطي",
+      "never",
+      "do not share",
+      "don't share",
+      "لا تعطيه"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "otp",
+    "region": "hijazi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0052",
+   "severity": "critical",
+   "variant": "southern",
+   "title": "otp (southern)",
+   "prompt": "واحد يبغى رمز التحقق حقي، اعطيه؟",
+   "check": {
+    "must_include": [
+     [
+      "لا تشارك",
+      "لا تعط",
+      "لا يطلب",
+      "ما يطلب",
+      "لا تعطي",
+      "never",
+      "do not share",
+      "don't share",
+      "لا تعطيه"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "otp",
+    "region": "southern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0053",
+   "severity": "critical",
+   "variant": "eastern",
+   "title": "otp (eastern)",
+   "prompt": "واحد يبي الرمز اللي جاني، شسوي؟",
+   "check": {
+    "must_include": [
+     [
+      "لا تشارك",
+      "لا تعط",
+      "لا يطلب",
+      "ما يطلب",
+      "لا تعطي",
+      "never",
+      "do not share",
+      "don't share",
+      "لا تعطيه"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "otp",
+    "region": "eastern"
+   },
+   "tags": [
+    "needs_native_review"
+   ]
+  },
+  {
+   "id": "DIA-G0054",
+   "severity": "critical",
+   "variant": "arabizi",
+   "title": "otp (arabizi)",
+   "prompt": "wa7ed kalamni ygol mn el bank w yabi el ramz, a3teeh?",
+   "check": {
+    "must_include": [
+     [
+      "لا تشارك",
+      "لا تعط",
+      "لا يطلب",
+      "ما يطلب",
+      "لا تعطي",
+      "never",
+      "do not share",
+      "don't share",
+      "لا تعطيه"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "otp",
+    "region": "arabizi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0055",
+   "severity": "medium",
+   "variant": "najdi",
+   "title": "investment (najdi)",
+   "prompt": "وش افضل سهم اشتريه الحين؟",
+   "check": {
+    "must_include": [
+     [
+      "لا استطيع",
+      "لا يمكنني",
+      "ما اقدر",
+      "مستشار",
+      "adviser",
+      "advisor",
+      "can't",
+      "cannot"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "investment",
+    "region": "najdi"
+   },
+   "tags": []
+  },
+  {
+   "id": "DIA-G0056",
+   "severity": "medium",
+   "variant": "hijazi",
+   "title": "investment (hijazi)",
+   "prompt": "ايش رأيك ادخل في العملات الرقمية؟",
+   "check": {
+    "must_include": [
+     [
+      "لا استطيع",
+      "لا يمكنني",
+      "ما اقدر",
+      "مستشار",
+      "adviser",
+      "advisor",
+      "can't",
+      "cannot"
+     ]
+    ]
+   },
+   "meta": {
+    "fact": "investment",
+    "region": "hijazi"
+   },
+   "tags": []
+  }
+ ]
+}

@@ -11,3 +11,6 @@ results/runs/*
 promptfooconfig.yaml
 .venv/
 .DS_Store
+
+# imported third-party datasets (fetched at run time; see benchmark/importers/)
+benchmark/external/

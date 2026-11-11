@@ -11,7 +11,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from analytics.analyze import AXIS_RECOMMENDATIONS, load_run, summarize  # noqa: E402
+from analytics.analyze import AXIS_RECOMMENDATIONS, breakdown, load_run, summarize  # noqa: E402
 
 SEV_ORDER = {"critical": 0, "high": 1, "medium": 2, "low": 3}
 
@@ -24,15 +24,16 @@ def _textdir(text: str) -> str:
 
 
 def _headline(summary: dict) -> str:
-    ts = sorted(summary["targets"], key=lambda t: t["risk_score"])
+    ts = summary["targets"]  # already ordered worst → best
+    if not ts:
+        return "This run contains model-level benchmarks only; see section 4."
     if len(ts) == 1:
         t = ts[0]
-        return (f"{t['target']} is rated {t['rating']} risk ({t['risk_score']}/100). "
-                f"It passed {t['pass_rate']}% of cases with {t['leaks']} data-leak finding(s).")
-    best, worst = ts[0], ts[-1]
-    return (f"{best['target']} performed best ({best['risk_score']}/100, {best['rating']}); "
-            f"{worst['target']} performed worst ({worst['risk_score']}/100, {worst['rating']}, "
-            f"{worst['leaks']} leak(s), {worst['critical_failures']} critical failure(s)).")
+        return (f"{t['target']} is rated {t['rating']} ({t['rating_reason']}). "
+                f"Risk index {t['risk_score']}/100; it passed {t['pass_rate']}% of {t['tests']} scenario cases.")
+    worst, best = ts[0], ts[-1]
+    return (f"{worst['target']} is rated {worst['rating']} ({worst['rating_reason']}). "
+            f"{best['target']} is rated {best['rating']} ({best['rating_reason']}).")
 
 
 def render(run_dir: Path, max_findings: int = 25) -> dict[str, Path]:
@@ -42,18 +43,26 @@ def render(run_dir: Path, max_findings: int = 25) -> dict[str, Path]:
     meta_p = run_dir / "meta.json"
     meta = json.loads(meta_p.read_text()) if meta_p.exists() else {}
 
+    bank = df[df.suite == "bank"]
     failures = {}
     for t in summary["targets"]:
-        f = df[(df.target == t["target"]) & ~df.passed].copy()
+        f = bank[(bank.target == t["target"]) & ~bank.passed].copy()
         f["_o"] = f.severity.map(SEV_ORDER)
         failures[t["target"]] = f.sort_values(["_o", "case_id"]).to_dict("records")
-    failing_axes = [a for a in summary["axes"] if (~df[df.axis == a].passed).any()]
+    failing_axes = [a for a in summary["axes"] if (~bank[bank.axis == a].passed).any()]
+    if any(not t["accuracy"] or t["accuracy"] < 100 for ms in summary["model_suites"] for t in ms["targets"]):
+        failing_axes.append("dialect_knowledge")
+    tables = {name: breakdown(df, col) for name, col in
+              (("Attack technique", "technique"), ("Attacker goal", "goal"), ("Arabic obfuscation", "obfuscation"),
+               ("Language variant", "variant"))}
+    tables = {k: v for k, v in tables.items() if not v.empty}
 
     env = Environment(loader=FileSystemLoader(ROOT / "report"), autoescape=select_autoescape(["html", "j2"]))
     env.filters["textdir"] = _textdir
     html = env.get_template("template.html.j2").render(
         summary=summary, failures=failures, failing_axes=failing_axes, axis_recs=AXIS_RECOMMENDATIONS,
         meta=meta, stamp=run_dir.name, n_cases=df.case_id.nunique(), headline=_headline(summary),
+        n_bank=bank.case_id.nunique(), n_model=df[df.suite != "bank"].case_id.nunique(), tables=tables,
         max_findings=max_findings, generated=dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
     )
     out = {"html": run_dir / "report.html"}

@@ -336,3 +336,43 @@ async def chat(body: ChatIn) -> ChatOut:
     else:
         reply = mock_reply(body.message, body.profile)
     return ChatOut(reply=reply, profile=body.profile, mode=mode)
+
+
+# --------------------------------------------------------------------------- #
+# Mock OpenAI-compatible endpoint — lets the "llm" target path (promptfoo's
+# OpenAI provider, model-only suites, multiple-choice scoring) run offline/in CI.
+#   COMPAT_BASE_URL=http://127.0.0.1:8000/v1 COMPAT_MODEL=mock COMPAT_API_KEY=x
+# Bank prompts (with a system message) get the baseline bot's answer; multiple-
+# choice prompts get a deterministic pseudo-random option — i.e. a chance-level
+# "model", which is exactly what the majority baseline should beat.
+# --------------------------------------------------------------------------- #
+import hashlib  # noqa: E402
+
+_OPT = re.compile(r"^[\s\-]*([أبجدA-D])\s*[)\-.:]", re.M)
+
+
+class _Msg(BaseModel):
+    role: str
+    content: str
+
+
+class _Completion(BaseModel):
+    model: str = "mock"
+    messages: list[_Msg]
+
+
+@app.post("/v1/chat/completions")
+def openai_compatible(body: _Completion) -> dict:
+    user = next((m.content for m in reversed(body.messages) if m.role == "user"), "")
+    has_system = any(m.role == "system" for m in body.messages)
+    letters = _OPT.findall(user)
+    if letters and not has_system:
+        h = int(hashlib.sha256(user.encode()).hexdigest(), 16)
+        text = f"{letters[h % len(letters)]}"
+    else:
+        text = mock_reply(user, "vulnerable")
+    return {
+        "id": "mock-" + hashlib.md5(user.encode()).hexdigest()[:12], "object": "chat.completion", "model": body.model,
+        "choices": [{"index": 0, "message": {"role": "assistant", "content": text}, "finish_reason": "stop"}],
+        "usage": {"prompt_tokens": len(user) // 4, "completion_tokens": len(text) // 4, "total_tokens": (len(user) + len(text)) // 4},
+    }
