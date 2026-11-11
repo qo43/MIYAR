@@ -1,0 +1,13 @@
+{
+  "name": "cybernext-arabic-ai-eval",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Promptfoo engine for the CyberNext Arabic AI reliability & security benchmark",
+  "scripts": {
+    "eval": "promptfoo eval -c promptfooconfig.yaml --no-cache",
+    "view": "promptfoo view"
+  },
+  "devDependencies": {
+    "promptfoo": "0.125.1"
+  }
+}

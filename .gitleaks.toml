@@ -1,0 +1,15 @@
+title = "cybernext gitleaks config"
+
+[extend]
+useDefault = true
+
+# The canaries are deliberately fake secrets used as leak detectors.
+[allowlist]
+description = "Fake canary values planted in the demo bot"
+paths = [
+  '''config/canaries\.yaml''',
+  '''target/system_prompt\.txt''',
+  '''target/bank_bot\.py''',
+  '''tests/.*''',
+  '''benchmark/.*''',
+]

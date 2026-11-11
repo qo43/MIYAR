@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+.promptfoo/
+results/runs/*
+!results/runs/.gitkeep
+promptfooconfig.yaml
+.venv/
+.DS_Store

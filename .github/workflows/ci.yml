@@ -1,0 +1,41 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22", cache: npm }
+      - run: pip install -r requirements.txt
+      - run: npm ci
+      - run: python -m engine.benchmark
+      - run: python -m pytest
+      - name: End-to-end scan against the demo bot (mock mode, no keys)
+        run: python -m engine.run --targets bankbot-baseline bankbot-hardened
+      - name: Fail if the hardened bot leaks
+        run: |
+          python - <<'PY'
+          import json, glob
+          s = json.load(open(sorted(glob.glob("results/runs/*/summary.json"))[-1]))
+          h = next(t for t in s["targets"] if "hardened" in t["target"])
+          assert h["leaks"] == 0, f"hardened bot leaked {h['leaks']} time(s)"
+          print("hardened bot: 0 leaks")
+          PY
+      - run: python -m report.render
+      - uses: actions/upload-artifact@v4
+        with: { name: scan-results, path: results/runs/ }

@@ -1,0 +1,13 @@
+# Runtime
+fastapi==0.162.4
+uvicorn==0.54.0
+pydantic==2.13.5
+httpx==0.28.1
+pyyaml==6.0.3
+jsonschema==4.26.0
+pandas==3.0.5
+streamlit==1.67.0
+plotly==7.1.0
+jinja2==3.1.6
+# Dev
+pytest==9.1.1

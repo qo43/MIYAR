@@ -1,0 +1,46 @@
+# AI systems the platform can test.
+#
+# type: http  -> a deployed chatbot reached over HTTP (how real customer bots are tested)
+# type: llm   -> a raw model behind a promptfoo provider, given the same bank
+#                system prompt so leak/injection tests are comparable.
+#
+# A target is only offered in the dashboard when every variable in
+# `requires_env` is set. Only test systems you own or have written
+# permission to test — injection and leak probes are security testing.
+
+targets:
+  - id: bankbot-baseline
+    label: "Demo bank bot — baseline"
+    type: http
+    url: "${BOT_URL:-http://127.0.0.1:8000}/chat"
+    profile: vulnerable
+    local_bot: true
+
+  - id: bankbot-hardened
+    label: "Demo bank bot — hardened"
+    type: http
+    url: "${BOT_URL:-http://127.0.0.1:8000}/chat"
+    profile: hardened
+    local_bot: true
+
+  - id: openai
+    label: "OpenAI ${OPENAI_MODEL:-gpt-4o-mini} + bank prompt"
+    type: llm
+    provider: "openai:chat:${OPENAI_MODEL:-gpt-4o-mini}"
+    requires_env: [OPENAI_API_KEY]
+
+  - id: anthropic
+    label: "Anthropic ${ANTHROPIC_MODEL:-claude-haiku-4-5} + bank prompt"
+    type: llm
+    provider: "anthropic:messages:${ANTHROPIC_MODEL:-claude-haiku-4-5}"
+    requires_env: [ANTHROPIC_API_KEY]
+
+  # Any OpenAI-compatible endpoint: OpenRouter, Groq, or a local Ollama / vLLM
+  # serving an Arabic model (ALLaM, Jais, ...).
+  - id: compat
+    label: "${COMPAT_LABEL:-OpenAI-compatible model} + bank prompt"
+    type: llm
+    provider: "openai:chat:${COMPAT_MODEL:-allam}"
+    api_base_url: "${COMPAT_BASE_URL}"
+    api_key_env: COMPAT_API_KEY
+    requires_env: [COMPAT_BASE_URL, COMPAT_MODEL]
