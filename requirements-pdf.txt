@@ -1,2 +1,2 @@
 # Optional: PDF export of the report (needs Pango; see README)
-weasyprint==70.0
+weasyprint>=60

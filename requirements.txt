@@ -1,13 +1,14 @@
-# Runtime
-fastapi==0.162.4
-uvicorn==0.54.0
-pydantic==2.13.5
-httpx==0.28.1
-pyyaml==6.0.3
-jsonschema==4.26.0
-pandas==3.0.5
-streamlit==1.67.0
-plotly==7.1.0
-jinja2==3.1.6
+# Runtime — ranges tested on Python 3.10 (Ubuntu 22.04 / WSL) and 3.12 (CI).
+# promptfoo itself is pinned exactly in package.json.
+fastapi>=0.110,<1
+uvicorn>=0.29
+pydantic>=2.6,<3
+httpx>=0.27,<1
+pyyaml>=6.0
+jsonschema>=4.21
+pandas>=2.1
+streamlit>=1.36
+plotly>=5.20
+jinja2>=3.1
 # Dev
-pytest==9.1.1
+pytest>=8.0
