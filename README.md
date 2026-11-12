@@ -1,4 +1,6 @@
-# CyberNext — Arabic AI Reliability & Security Testing Platform
+# MI’YAR (معيار) — Arabic AI Reliability & Security Testing Platform
+
+*Evaluating AI. Building Trust.*
 
 A platform for testing chatbots and LLMs that serve **Arabic-speaking users**, covering both **Modern Standard
 Arabic and Saudi dialects**. It checks whether a system answers correctly, understands how customers actually write,
