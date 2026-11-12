@@ -1,4 +1,4 @@
-"""CyberNext dashboard — run scans, inspect results, compare models, export the report.
+"""MI’YAR dashboard — run scans, inspect results, compare models, export the report.
 
 Run:  streamlit run dashboard/app.py
 """
@@ -26,7 +26,7 @@ RUNS = ROOT / "results" / "runs"
 RATING_COLOR = {"Low": "#2e7d32", "Medium": "#b7791f", "High": "#c2410c", "Critical": "#b91c1c"}
 SEV_ORDER = ["critical", "high", "medium", "low"]
 
-st.set_page_config(page_title="CyberNext · Arabic AI Testing", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="MI’YAR · Arabic AI Testing", page_icon="🛡️", layout="wide")
 st.markdown(
     """<style>
     .ar {direction: rtl; text-align: right; unicode-bidi: plaintext; white-space: pre-wrap;
@@ -59,7 +59,7 @@ def load(run_dir: str, mtime: float) -> tuple[pd.DataFrame, dict]:
 # --------------------------------------------------------------------------- #
 # Sidebar
 # --------------------------------------------------------------------------- #
-st.sidebar.title("🛡️ CyberNext")
+st.sidebar.title("🛡️ MI’YAR")
 st.sidebar.caption("Arabic AI reliability & security testing")
 page = st.sidebar.radio("Page", ["Run a scan", "Overview", "Failures", "Breakdown", "Compare models",
                                  "Model benchmarks", "Benchmark", "Report"])
